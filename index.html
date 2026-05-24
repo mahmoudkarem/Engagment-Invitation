@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mahmoud & Habiba — Engagement Invitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8d49a;
+      --gold-dark: #8b6914;
+      --rose: #e8c4b8;
+      --cream: #fdf8f2;
+      --dark: #2a1f0e;
+    }
+
+    body {
+      background: #1a1008;
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+      height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── STAMP SCENE ── */
+    #stamp-scene {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, #3a1f06 0%, #150c02 60%, #080401 100%);
+      z-index: 100;
+      cursor: pointer;
+      transition: opacity 1s ease, visibility 1s ease;
+      perspective: 1200px;
+    }
+
+    /* ambient light orb behind envelope */
+    #stamp-scene::before {
+      content: '';
+      position: absolute;
+      width: min(500px, 110vw);
+      height: min(300px, 60vw);
+      background: radial-gradient(ellipse, rgba(201,168,76,0.12) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -60%);
+      pointer-events: none;
+    }
+
+    #stamp-scene.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* ── ENVELOPE WRAPPER ── */
+    .envelope {
+      position: relative;
+      width: min(440px, 88vw);
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,0.8)) drop-shadow(0 8px 20px rgba(0,0,0,0.6));
+      animation: envFloat 5s ease-in-out infinite;
+      transform-style: preserve-3d;
+    }
+
+    @keyframes envFloat {
+      0%   { transform: translateY(0px)   rotateX(2deg) rotateZ(-1deg); }
+      35%  { transform: translateY(-16px) rotateX(0deg) rotateZ(0.4deg); }
+      65%  { transform: translateY(-10px) rotateX(1deg) rotateZ(-0.6deg); }
+      100% { transform: translateY(0px)   rotateX(2deg) rotateZ(-1deg); }
+    }
+
+    /* ── ENVELOPE BODY ── */
+    .env-body {
+      width: 100%;
+      aspect-ratio: 7 / 5;
+      position: relative;
+      border-radius: 3px 3px 8px 8px;
+      overflow: hidden;
+      background:
+        linear-gradient(175deg, #faf3e2 0%, #f2e5c8 35%, #ecdbb0 70%, #e4d09e 100%);
+    }
+
+    /* paper grain overlay */
+    .env-body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.5;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ── BOTTOM FLAP (back) ── */
+    .env-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 58%;
+      background: linear-gradient(175deg, #eddcb0 0%, #e0ca90 100%);
+      clip-path: polygon(0% 100%, 50% 2%, 100% 100%);
+      z-index: 2;
+    }
+
+    /* ── SIDE TRIANGLES ── */
+    .env-side-left {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #e0ca90, #eddcb0 60%, transparent);
+      clip-path: polygon(0% 0%, 52% 50%, 0% 100%);
+      z-index: 3;
+    }
+
+    .env-side-right {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to left, #d8c080, #e8d5a8 60%, transparent);
+      clip-path: polygon(100% 0%, 48% 50%, 100% 100%);
+      z-index: 3;
+    }
+
+    /* ── TOP FLAP (animated open) ── */
+    .env-flap {
+      position: absolute;
+      top: 0; left: -1px; right: -1px;
+      height: 56%;
+      background: linear-gradient(170deg, #faf3e2 0%, #f0e2c0 50%, #e8d5a8 100%);
+      clip-path: polygon(0% 0%, 50% 96%, 100% 0%);
+      transform-origin: top center;
+      transform-style: preserve-3d;
+      z-index: 8;
+      animation: flapOpen 5s ease-in-out infinite;
+    }
+
+    /* flap inner shadow line */
+    .env-flap::after {
+      content: '';
+      position: absolute;
+      bottom: 18%; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(180,140,50,0.25), transparent);
+    }
+
+    @keyframes flapOpen {
+      0%, 100% { transform: rotateX(0deg);   box-shadow: none; }
+      40%, 60% { transform: rotateX(-28deg); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    }
+
+    /* ── GOLD FOIL BORDER ── */
+    .env-foil {
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      pointer-events: none;
+      border-radius: 3px 3px 8px 8px;
+    }
+
+    /* outer gold frame */
+    .env-foil::before {
+      content: '';
+      position: absolute;
+      inset: 7px;
+      border: 1.5px solid rgba(180,140,50,0.5);
+      border-radius: 2px;
+      background: transparent;
+    }
+
+    /* inner thin line */
+    .env-foil::after {
+      content: '';
+      position: absolute;
+      inset: 11px;
+      border: 0.5px solid rgba(180,140,50,0.25);
+      border-radius: 1px;
+    }
+
+    /* ── ROSE CORNER FLOURISHES ── */
+    .env-corner {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .env-corner svg { width: 100%; height: 100%; }
+    .env-corner.tl { top: 14px;    left: 14px; }
+    .env-corner.tr { top: 14px;    right: 14px;  transform: scaleX(-1); }
+    .env-corner.bl { bottom: 14px; left: 14px;   transform: scaleY(-1); }
+    .env-corner.br { bottom: 14px; right: 14px;  transform: scale(-1); }
+
+    /* ── ENV TITLE TEXT ── */
+    .env-title {
+      position: absolute;
+      bottom: 22%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 6;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .env-title-top {
+      font-size: clamp(0.45rem, 1.5vw, 0.58rem);
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: rgba(120,85,20,0.65);
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .env-title-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.6rem, 5.5vw, 2.4rem);
+      color: #8b6210;
+      opacity: 0.75;
+      line-height: 1;
+      text-shadow: 0 1px 3px rgba(255,255,255,0.4);
+    }
+
+    /* ── WAX SEAL ── */
+    .wax-seal {
+      position: absolute;
+      left: 50%;
+      top: 46%;
+      transform: translate(-50%, -50%);
+      z-index: 15;
+      width: min(120px, 28vw);
+      height: min(120px, 28vw);
+      animation: sealGlow 3s ease-in-out infinite alternate;
+    }
+
+    .wax-seal img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      display: block;
+    }
+
+    @keyframes sealGlow {
+      from {
+        filter:
+          drop-shadow(0 4px 12px rgba(0,0,0,0.55))
+          drop-shadow(0 0 16px rgba(201,168,76,0.35));
+      }
+      to {
+        filter:
+          drop-shadow(0 6px 20px rgba(0,0,0,0.65))
+          drop-shadow(0 0 40px rgba(201,168,76,0.7))
+          drop-shadow(0 0 70px rgba(201,168,76,0.3));
+      }
+    }
+
+    /* ── TAP HINT ── */
+    .tap-hint {
+      margin-top: 2.4rem;
+      color: var(--gold-light);
+      font-size: 0.68rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeHint 1.2s ease 1.6s forwards;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .tap-hint::before,
+    .tap-hint::after {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.6));
+    }
+    .tap-hint::after {
+      background: linear-gradient(to left, transparent, rgba(201,168,76,0.6));
+    }
+
+    @keyframes fadeHint {
+      to { opacity: 0.7; }
+    }
+
+    .tap-hint span {
+      display: inline-block;
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+
+    /* ── INVITATION SCENE ── */
+    #invitation-scene {
+      position: fixed;
+      inset: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background: #0e0802;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1s ease 0.3s, visibility 1s ease 0.3s;
+    }
+
+    #invitation-scene.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Parallax background petals */
+    #invitation-scene::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(232,196,184,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse at center, #1e1205 0%, #0a0601 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .invitation-inner {
+      position: relative;
+      z-index: 1;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1rem 4rem;
+    }
+
+    /* ── HEADER IMAGE ── */
+    .header-image-wrap {
+      width: min(320px, 80vw);
+      position: relative;
+      margin: 2.5rem auto -1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Rotating halo ring */
+    .header-image-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      border: 1.5px solid transparent;
+      background:
+        linear-gradient(#1a1208, #1a1208) padding-box,
+        conic-gradient(
+          rgba(201,168,76,0.9) 0deg,
+          rgba(232,196,184,0.4) 90deg,
+          rgba(201,168,76,0.1) 180deg,
+          rgba(232,196,184,0.4) 270deg,
+          rgba(201,168,76,0.9) 360deg
+        ) border-box;
+      animation: rotatHalo 6s linear infinite;
+    }
+
+    /* Outer soft glow ring */
+    .header-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -28px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.15);
+      animation: rotatHalo 10s linear infinite reverse;
+    }
+
+    @keyframes rotatHalo {
+      to { transform: rotate(360deg); }
+    }
+
+    .header-img-inner {
+      position: relative;
+      width: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      animation: floatMono 4s ease-in-out infinite, glowPulse 3s ease-in-out infinite alternate;
+      box-shadow:
+        0 0 0 2px rgba(201,168,76,0.2),
+        0 0 40px rgba(201,168,76,0.35),
+        0 0 80px rgba(201,168,76,0.15);
+    }
+
+    .header-img-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 18%;
+      display: block;
+      border-radius: 50%;
+      transform: scale(1.18);
+      transform-origin: center 18%;
+    }
+
+    @keyframes floatMono {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50%       { transform: translateY(-10px) scale(1.02); }
+    }
+
+    @keyframes glowPulse {
+      from {
+        box-shadow:
+          0 0 0 2px rgba(201,168,76,0.2),
+          0 0 30px rgba(201,168,76,0.3),
+          0 0 60px rgba(201,168,76,0.1);
+      }
+      to {
+        box-shadow:
+          0 0 0 2px rgba(201,168,76,0.5),
+          0 0 55px rgba(201,168,76,0.55),
+          0 0 100px rgba(201,168,76,0.25);
+      }
+    }
+
+    /* Gold line dividers */
+    .divider {
+      width: min(320px, 80vw);
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 0.6rem auto;
+      opacity: 0.7;
+    }
+
+    .divider-ornament {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 0.4rem 0;
+    }
+
+    .divider-ornament .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold));
+      opacity: 0.6;
+    }
+
+    .divider-ornament .line.r {
+      background: linear-gradient(to left, transparent, var(--gold));
+    }
+
+    .divider-ornament .diamond {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+
+    /* ── CARD ── */
+    .card {
+      width: min(640px, 96vw);
+      background: linear-gradient(160deg, #1e1408 0%, #110d05 60%, #1a1208 100%);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 2px;
+      padding: 3rem 2.5rem 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 0 60px rgba(0,0,0,0.8),
+        inset 0 0 80px rgba(201,168,76,0.03);
+    }
+
+    /* Corner ornaments */
+    .card::before,
+    .card::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-color: rgba(201,168,76,0.4);
+      border-style: solid;
+    }
+
+    .card::before {
+      top: 12px; left: 12px;
+      border-width: 1px 0 0 1px;
+    }
+
+    .card::after {
+      bottom: 12px; right: 12px;
+      border-width: 0 1px 1px 0;
+    }
+
+    .card-corner-tr,
+    .card-corner-bl {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-color: rgba(201,168,76,0.4);
+      border-style: solid;
+    }
+
+    .card-corner-tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+    .card-corner-bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+
+    /* Typography */
+    .label-top {
+      font-size: 0.62rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      opacity: 0.8;
+      margin-bottom: 1.4rem;
+    }
+
+    .label-invite {
+      font-size: 0.68rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .label-for {
+      font-size: 0.62rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.6);
+      margin: 1.4rem 0 0.6rem;
+    }
+
+    .names {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(3.2rem, 12vw, 5.5rem);
+      color: var(--gold);
+      line-height: 1;
+      text-shadow:
+        0 0 30px rgba(201,168,76,0.5),
+        0 0 60px rgba(201,168,76,0.2);
+      letter-spacing: 0.02em;
+      margin: 0.3rem 0;
+    }
+
+    .ampersand {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      color: var(--rose);
+      opacity: 0.9;
+      display: block;
+      margin: -0.4rem 0;
+    }
+
+    .date-row {
+      margin: 2rem 0 0.5rem;
+    }
+
+    .date-day {
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      opacity: 0.7;
+    }
+
+    .date-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 10vw, 4.5rem);
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      text-shadow: 0 0 20px rgba(201,168,76,0.4);
+      letter-spacing: 0.1em;
+    }
+
+    .date-suffix {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    .date-month-year {
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      opacity: 0.7;
+      margin-top: 0.2rem;
+    }
+
+    .time-row {
+      margin: 1.8rem 0;
+    }
+
+    .time-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 6vw, 2.6rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold-light);
+      letter-spacing: 0.1em;
+    }
+
+    .venue-section {
+      margin-top: 1.8rem;
+    }
+
+    .venue-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(201,168,76,0.3);
+    }
+
+    .venue-address {
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      opacity: 0.65;
+      line-height: 1.9;
+      margin-top: 0.6rem;
+    }
+
+    /* Stamp watermark inside card */
+    .card-stamp {
+      margin: 2.5rem auto 0;
+      width: min(90px, 22vw);
+      opacity: 0.25;
+      filter: sepia(1) saturate(2);
+    }
+
+    /* ── POLAROID PHOTO ── */
+    .polaroid-wrap {
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.4s forwards;
+    }
+
+    .polaroid {
+      background: #fff;
+      padding: 14px 14px 52px;
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.6),
+        0 2px 8px rgba(0,0,0,0.4),
+        0 0 0 1px rgba(255,255,255,0.05);
+      transform: rotate(-2.5deg);
+      animation: polaroidFloat 5s ease-in-out infinite, polaroidReveal 1s ease 1.4s both;
+      width: min(300px, 82vw);
+      position: relative;
+    }
+
+    .polaroid::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(255,255,255,0.12) 0%,
+        transparent 50%,
+        rgba(0,0,0,0.05) 100%
+      );
+      pointer-events: none;
+    }
+
+    .polaroid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.05) saturate(0.9);
+    }
+
+    .polaroid-caption {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.4rem, 5vw, 1.8rem);
+      color: #3a2a1a;
+      text-align: center;
+      margin-top: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    @keyframes polaroidFloat {
+      0%   { transform: rotate(-2.5deg) translateY(0px); }
+      30%  { transform: rotate(-1.5deg) translateY(-8px); }
+      60%  { transform: rotate(-3deg)   translateY(-4px); }
+      100% { transform: rotate(-2.5deg) translateY(0px); }
+    }
+
+    @keyframes polaroidReveal {
+      from { opacity: 0; transform: rotate(-2.5deg) translateY(40px) scale(0.92); }
+      to   { opacity: 1; transform: rotate(-2.5deg) translateY(0px)  scale(1); }
+    }
+
+    /* ── SPARKLE PARTICLES ── */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+      animation: sparkle var(--dur) ease-in-out var(--delay) infinite;
+    }
+
+    @keyframes sparkle {
+      0%   { opacity: 0; transform: translateY(0) scale(0); }
+      20%  { opacity: 0.8; transform: translateY(-30px) scale(1); }
+      80%  { opacity: 0.3; transform: translateY(-80px) scale(0.5); }
+      100% { opacity: 0; transform: translateY(-110px) scale(0); }
+    }
+
+    /* ── ENTRANCE ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.9s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card { animation: fadeUp 1s ease 0.8s forwards; opacity: 0; }
+    .header-image-wrap { animation: fadeUp 1s ease 0.3s forwards; opacity: 0; }
+
+    /* Audio indicator */
+    .audio-indicator {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 2rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: background 0.3s;
+    }
+
+    .audio-indicator:hover { background: rgba(201,168,76,0.2); }
+
+    .audio-indicator svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--gold);
+    }
+
+    .audio-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 16px;
+    }
+
+    .audio-bars span {
+      display: block;
+      width: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      animation: bar 0.8s ease-in-out infinite alternate;
+    }
+
+    .audio-bars span:nth-child(1) { height: 6px;  animation-delay: 0s;    }
+    .audio-bars span:nth-child(2) { height: 14px; animation-delay: 0.15s; }
+    .audio-bars span:nth-child(3) { height: 10px; animation-delay: 0.3s;  }
+    .audio-bars span:nth-child(4) { height: 16px; animation-delay: 0.1s;  }
+    .audio-bars span:nth-child(5) { height: 8px;  animation-delay: 0.25s; }
+
+    @keyframes bar {
+      from { transform: scaleY(0.3); }
+      to   { transform: scaleY(1); }
+    }
+
+    .audio-bars.paused span { animation-play-state: paused; }
+
+    .audio-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ STAMP SCENE ══ -->
+  <div id="stamp-scene" onclick="openInvitation()">
+
+    <div class="envelope">
+      <div class="env-body">
+
+        <!-- Back bottom flap -->
+        <div class="env-bottom"></div>
+
+        <!-- Side triangles -->
+        <div class="env-side-left"></div>
+        <div class="env-side-right"></div>
+
+        <!-- Names watermark -->
+        <div class="env-title">
+          <span class="env-title-top">You're Invited</span>
+          <span class="env-title-names">Mahmoud &amp; Habiba</span>
+        </div>
+
+        <!-- Top flap (animated open) -->
+        <div class="env-flap"></div>
+
+        <!-- Gold foil border -->
+        <div class="env-foil"></div>
+
+        <!-- Corner flourishes -->
+        <div class="env-corner tl">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 38 Q2 2 38 2" stroke="#b8922a" stroke-width="1" fill="none"/>
+            <path d="M2 28 Q8 8 28 2" stroke="#b8922a" stroke-width="0.6" fill="none" opacity="0.5"/>
+            <circle cx="2" cy="2" r="2" fill="#b8922a" opacity="0.7"/>
+            <path d="M8 2 Q5 5 2 8" stroke="#b8922a" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="env-corner tr">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 38 Q2 2 38 2" stroke="#b8922a" stroke-width="1" fill="none"/>
+            <path d="M2 28 Q8 8 28 2" stroke="#b8922a" stroke-width="0.6" fill="none" opacity="0.5"/>
+            <circle cx="2" cy="2" r="2" fill="#b8922a" opacity="0.7"/>
+            <path d="M8 2 Q5 5 2 8" stroke="#b8922a" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="env-corner bl">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 38 Q2 2 38 2" stroke="#b8922a" stroke-width="1" fill="none"/>
+            <path d="M2 28 Q8 8 28 2" stroke="#b8922a" stroke-width="0.6" fill="none" opacity="0.5"/>
+            <circle cx="2" cy="2" r="2" fill="#b8922a" opacity="0.7"/>
+            <path d="M8 2 Q5 5 2 8" stroke="#b8922a" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+        <div class="env-corner br">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 38 Q2 2 38 2" stroke="#b8922a" stroke-width="1" fill="none"/>
+            <path d="M2 28 Q8 8 28 2" stroke="#b8922a" stroke-width="0.6" fill="none" opacity="0.5"/>
+            <circle cx="2" cy="2" r="2" fill="#b8922a" opacity="0.7"/>
+            <path d="M8 2 Q5 5 2 8" stroke="#b8922a" stroke-width="0.8" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- Wax seal on fold line -->
+        <div class="wax-seal">
+          <img src="intro.png" alt="Wax Seal" />
+        </div>
+
+      </div>
+    </div>
+
+    <p class="tap-hint"><span>tap to open</span></p>
+  </div>
+
+  <!-- ══ INVITATION SCENE ══ -->
+  <div id="invitation-scene">
+
+    <!-- floating sparkles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="invitation-inner">
+
+      <!-- Header couple photo -->
+      <div class="header-image-wrap">
+        <div class="header-img-inner">
+          <img src="image.jpeg" alt="Mahmoud & Habiba" />
+        </div>
+      </div>
+
+      <!-- Main card -->
+      <div class="card">
+        <div class="card-corner-tr"></div>
+        <div class="card-corner-bl"></div>
+
+        <p class="label-top">You're Invited to Celebrate</p>
+
+        <div class="divider-ornament" style="max-width:260px;margin:0 auto 1.2rem;">
+          <div class="line"></div>
+          <div class="diamond"></div>
+          <div class="line r"></div>
+        </div>
+
+        <p class="label-invite">The Engagement of</p>
+
+        <div class="names">Mahmoud</div>
+        <span class="ampersand">&amp;</span>
+        <div class="names">Habiba</div>
+
+        <div class="divider-ornament" style="max-width:260px;margin:1.4rem auto 0;">
+          <div class="line"></div>
+          <div class="diamond"></div>
+          <div class="line r"></div>
+        </div>
+
+        <!-- Date -->
+        <div class="date-row">
+          <p class="date-day">Friday</p>
+          <p class="date-number">19<span class="date-suffix">th</span></p>
+          <p class="date-month-year">June &nbsp;·&nbsp; 2026</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Time -->
+        <div class="time-row">
+          <p class="time-text">06 : 00 AM</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Venue -->
+        <div class="venue-section">
+          <p class="venue-name">BellaRoze Hall</p>
+          <p class="venue-address">
+            Salah Salem — Panorama Club<br/>
+            6th of October
+          </p>
+        </div>
+
+        <!-- Stamp watermark -->
+        <img class="card-stamp" src="intro.png" alt="" aria-hidden="true" />
+      </div>
+
+      <!-- Polaroid photo -->
+      <div class="polaroid-wrap">
+        <div class="polaroid">
+          <img src="image.jpeg" alt="Mahmoud & Habiba" />
+          <p class="polaroid-caption">Mahmoud &amp; Habiba</p>
+        </div>
+      </div>
+
+    </div><!-- /invitation-inner -->
+  </div><!-- /invitation-scene -->
+
+  <!-- Audio element -->
+  <audio id="bgAudio" loop>
+    <source src="intro music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Audio toggle button (shows after open) -->
+  <div class="audio-indicator" id="audioBtn" style="display:none;" onclick="toggleAudio()">
+    <div class="audio-bars" id="audioBars">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <span class="audio-label">Music</span>
+  </div>
+
+  <script>
+    let audioPlaying = false;
+
+    function openInvitation() {
+      const stampScene = document.getElementById('stamp-scene');
+      const invScene   = document.getElementById('invitation-scene');
+      const audioBtn   = document.getElementById('audioBtn');
+      const audio      = document.getElementById('bgAudio');
+
+      stampScene.classList.add('hide');
+      invScene.classList.add('show');
+      audioBtn.style.display = 'flex';
+
+      audio.volume = 0;
+      audio.play().then(() => {
+        audioPlaying = true;
+        fadeInAudio(audio);
+      }).catch(() => {});
+
+      spawnParticles();
+    }
+
+    function fadeInAudio(audio) {
+      const target = 0.75;
+      const step   = 0.02;
+      const tick   = setInterval(() => {
+        if (audio.volume < target - step) {
+          audio.volume = Math.min(audio.volume + step, target);
+        } else {
+          audio.volume = target;
+          clearInterval(tick);
+        }
+      }, 80);
+    }
+
+    function toggleAudio() {
+      const audio = document.getElementById('bgAudio');
+      const bars  = document.getElementById('audioBars');
+      if (audioPlaying) {
+        audio.pause();
+        audioPlaying = false;
+        bars.classList.add('paused');
+      } else {
+        audio.play();
+        audioPlaying = true;
+        bars.classList.remove('paused');
+      }
+    }
+
+    function spawnParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random() * 4 + 2;
+        p.style.cssText = `
+          left: ${Math.random() * 100}%;
+          top: ${60 + Math.random() * 40}%;
+          width: ${size}px;
+          height: ${size}px;
+          --dur: ${2 + Math.random() * 3}s;
+          --delay: ${Math.random() * 4}s;
+          opacity: 0;
+        `;
+        container.appendChild(p);
+      }
+    }
+  </script>
+</body>
+</html>
