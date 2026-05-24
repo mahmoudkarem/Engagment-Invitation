@@ -287,11 +287,8 @@
       top: 44%;
       transform: translate(-50%, -50%);
       z-index: 15;
-      width: min(115px, 26vw);
-      height: min(115px, 26vw);
-      overflow: hidden;
-      border-radius: 50%;
-      animation: sealGlow 3s ease-in-out infinite alternate;
+      width: min(140px, 32vw);
+      height: min(140px, 32vw);
       transition: transform 0.5s ease, opacity 0.5s ease;
     }
 
@@ -306,12 +303,12 @@
     }
 
     .wax-seal img {
-      width: 130%;
-      height: 130%;
-      object-fit: cover;
-      object-position: center center;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
       display: block;
-      margin: -10% 0 0 -15%;
+      mix-blend-mode: multiply;
+      background: transparent;
     }
 
     /* M&H text over stamp */
@@ -329,7 +326,7 @@
     .seal-label-m,
     .seal-label-h {
       font-family: 'Great Vibes', cursive;
-      font-size: clamp(1.4rem, 4.5vw, 2rem);
+      font-size: clamp(1.8rem, 6vw, 2.6rem);
       color: #3a2200;
       text-shadow: 0 1px 0 rgba(255,220,120,0.5), 0 1px 4px rgba(0,0,0,0.3);
       line-height: 0.85;
@@ -337,15 +334,15 @@
 
     .seal-label-amp {
       font-family: 'Great Vibes', cursive;
-      font-size: clamp(0.7rem, 2.2vw, 1rem);
+      font-size: clamp(0.9rem, 3vw, 1.3rem);
       color: #4a2e00;
       text-shadow: 0 1px 2px rgba(0,0,0,0.25);
       line-height: 1.1;
     }
 
     @keyframes sealGlow {
-      from { filter: drop-shadow(0 4px 12px rgba(0,0,0,0.55)) drop-shadow(0 0 18px rgba(201,168,76,0.35)); }
-      to   { filter: drop-shadow(0 6px 20px rgba(0,0,0,0.65)) drop-shadow(0 0 45px rgba(201,168,76,0.7)) drop-shadow(0 0 80px rgba(201,168,76,0.25)); }
+      from { filter: none; }
+      to   { filter: none; }
     }
 
     /* ── TAP HINT ── */
