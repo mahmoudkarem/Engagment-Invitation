@@ -883,6 +883,36 @@
       margin-top: 0.6rem;
     }
 
+    /* Map link button */
+    .venue-map {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+      padding: 0.55rem 1.3rem;
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 2rem;
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      background: rgba(201,168,76,0.06);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+
+    .venue-map:hover {
+      background: rgba(201,168,76,0.16);
+      border-color: rgba(201,168,76,0.7);
+      transform: translateY(-2px);
+    }
+
+    .venue-map svg {
+      width: 15px;
+      height: 15px;
+      fill: var(--gold);
+    }
+
     /* Stamp watermark inside card */
     .card-stamp {
       margin: 2.5rem auto 0;
@@ -1169,8 +1199,8 @@
 
         <!-- Date -->
         <div class="date-row">
-          <p class="date-day">Friday</p>
-          <p class="date-number">19<span class="date-suffix">th</span></p>
+          <p class="date-day">Saturday</p>
+          <p class="date-number">20<span class="date-suffix">th</span></p>
           <p class="date-month-year">June &nbsp;·&nbsp; 2026</p>
         </div>
 
@@ -1178,18 +1208,22 @@
 
         <!-- Time -->
         <div class="time-row">
-          <p class="time-text">06 : 00 AM</p>
+          <p class="time-text">06 : 00 PM</p>
         </div>
 
         <div class="divider"></div>
 
         <!-- Venue -->
         <div class="venue-section">
-          <p class="venue-name">BellaRoze Hall</p>
+          <p class="venue-name">La Perla Hall</p>
           <p class="venue-address">
-            Salah Salem — Panorama Club<br/>
-            6th of October
+            Andalusia Garden of the Armed Forces<br/>
+            Next to the Ministry of Finance — Nasr City
           </p>
+          <a class="venue-map" href="https://maps.google.com/?q=30.061239,31.300640" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+            <span>View Location on Map</span>
+          </a>
         </div>
 
         <!-- Stamp watermark -->
